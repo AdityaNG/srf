@@ -206,7 +206,7 @@ class Implicit4D():
         if len(ckpts) > 0 and not self.cfg.no_reload:
             ckpt_path = ckpts[-1]
             print('Reloading from', ckpt_path)
-            ckpt = torch.load(ckpt_path)
+            ckpt = torch.load(ckpt_path, map_location=self.device)
 
             self.start = ckpt['global_step']
             try:
