@@ -13,12 +13,20 @@ to8b = lambda x : (255*np.clip(x,0,1)).astype(np.uint8)
 
 class Implicit4D():
 
-    def __init__(self, cfg, proj_pts_to_ref):
+    def __init__(self, cfg, proj_pts_to_ref, use_gpu=False):
         self.proj_pts_to_ref = proj_pts_to_ref
         self.cfg = cfg
         self.device = torch.device( "cuda")
         models = {'model1': Implicit4DNN }
-        self.model = models[cfg.model](cfg, self.device)
+        #self.model = models[cfg.model](cfg, self.device)
+        #self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        if torch.cuda.is_available() and use_gpu:
+            self.device = torch.device("cuda")
+            print("Using GPU")
+        else:
+            self.device = torch.device("cpu")
+            print("Using CPU")
+
         self.grad_vars = list(self.model.parameters())
 
         self.model_fine = None
