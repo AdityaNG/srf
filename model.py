@@ -18,7 +18,7 @@ class Implicit4D():
         self.cfg = cfg
         self.device = torch.device( "cuda")
         models = {'model1': Implicit4DNN }
-        #self.model = models[cfg.model](cfg, self.device)
+        self.model = models[cfg.model](cfg, self.device)
         #self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         if torch.cuda.is_available() and use_gpu:
             self.device = torch.device("cuda")
